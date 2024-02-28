@@ -13,7 +13,7 @@ There are two major features. Creating a CA, and adding client certificates quic
 Run the script with the `makeca` subcommand, fill in the questions, and have a CA configured in the `ca/` directory.
 
 ```bash
-$ ./ca.sh makeca
+$ ./pmc.sh makeca
 
 	-- poor mans ca --
 
@@ -40,7 +40,7 @@ Email Address []:
 Add a new client with the `add` subcommand.
 
 ```bash
-$ ./ca.sh add leon
+$ ./pmc.sh add leon
 
 	-- poor mans ca --
 

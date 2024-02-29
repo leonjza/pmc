@@ -11,6 +11,7 @@ echo
 ca_dir=ca
 ca_key_file_path=$ca_dir/ca.key
 ca_x509_cert_path=$ca_dir/ca.crt
+ca_x509_pem_path=$ca_dir/ca.pem
 
 function make_ca() {
 
@@ -36,6 +37,9 @@ function make_ca() {
 		-key $ca_key_file_path \
 		-sha256 -days 1024 \
 		-out $ca_x509_cert_path
+
+	echo "i| generating pem @ $ca_x509_pem_path"
+	cat $ca_x509_cert_path $ca_key_file_path > $ca_x509_pem_path
 }
 
 function add_client() {

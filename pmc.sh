@@ -12,6 +12,7 @@ ca_dir=ca
 ca_key_file_path=$ca_dir/ca.key
 ca_x509_cert_path=$ca_dir/ca.crt
 ca_x509_pem_path=$ca_dir/ca.pem
+ca_x509_p12_path=$ca_dir/ca.p12
 
 function make_ca() {
 
@@ -40,6 +41,15 @@ function make_ca() {
 
 	echo "i| generating pem @ $ca_x509_pem_path"
 	cat $ca_x509_cert_path $ca_key_file_path > $ca_x509_pem_path
+
+	echo "i| generating pkcs#12 @ $ca_x509_p12_path. get ready to enter a password to protect it"
+	openssl pkcs12 -export \
+		-out $ca_x509_p12_path \
+		-inkey $ca_key_file_path \
+		-in $ca_x509_cert_path \
+		-certfile $ca_x509_cert_path
+
+	echo "i| done"
 }
 
 function add_client() {
@@ -53,6 +63,7 @@ function add_client() {
 	client_csr_path=$client_dir/$client_name.csr
 	client_crt_path=$client_dir/$client_name.crt
 	client_pem_path=$client_dir/$client_name.pem
+	client_p12_path=$client_dir/$client_name.p12
 
 	if [[ -d $client_dir ]]; then
 		echo "e| client directory $client_dir already exists"
@@ -91,6 +102,13 @@ function add_client() {
 
 	echo "i| generating pem @ $client_pem_path"
 	cat $client_crt_path $client_key_path > $client_pem_path
+
+	echo "i| generating pkcs#12 @ $client_p12_path. get ready to enter a password to protect it"
+	openssl pkcs12 -export \
+		-out $client_p12_path \
+		-inkey $client_key_path \
+		-in $client_crt_path \
+		-certfile $ca_x509_cert_path
 
 	echo "i| done"
 }

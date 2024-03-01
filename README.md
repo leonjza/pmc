@@ -15,7 +15,7 @@ Run the script with the `makeca` subcommand, fill in the questions, and have a C
 ```bash
 $ ./pmc.sh makeca
 
-	-- poor mans ca --
+    -- poor mans ca --
 
 i| generating private key @ ca/ca.key
 i| creating x509 certificate @ ca/ca.crt. get ready to answer some questions!
@@ -26,13 +26,18 @@ There are quite a few fields but you can leave some blank
 For some fields there will be a default value,
 If you enter '.', the field will be left blank.
 -----
-Country Name (2 letter code) [AU]:ZA
-State or Province Name (full name) [Some-State]:PewVille
-Locality Name (eg, city) []:PewPew
-Organization Name (eg, company) [Internet Widgits Pty Ltd]:
-Organizational Unit Name (eg, section) []:
-Common Name (e.g. server FQDN or YOUR name) []:pew.local
-Email Address []:
+Country Name (2 letter code) [AU]:gb
+State or Province Name (full name) [Some-State]:someprov
+Locality Name (eg, city) []:somecity
+Organization Name (eg, company) [Internet Widgits Pty Ltd]:someorg
+Organizational Unit Name (eg, section) []:someou
+Common Name (e.g. server FQDN or YOUR name) []:test.local
+Email Address []:it@test.local
+i| generating pem @ ca/ca.pem
+i| generating pkcs#12 @ ca/ca.p12. get ready to enter a password to protect it
+Enter Export Password:
+Verifying - Enter Export Password:
+i| done
 ```
 
 ### add
@@ -42,14 +47,19 @@ Add a new client with the `add` subcommand.
 ```bash
 $ ./pmc.sh add leon
 
-	-- poor mans ca --
+    -- poor mans ca --
 
 i| using ca certificate @ ca/ca.crt
-i| generating client key @ ca/leon/leon.key...
-i| generating csr @ ca/leon/leon.csr
-i| generating crt @ ca/leon/leon.crt
+i| ca certificate subject: subject=C=gb, ST=someprov, L=somecity, O=someorg, OU=someou, CN=test.local, emailAddress=it@test.local
+i| generating client key @ ca/user1/user1.key...
+i| generating csr @ ca/user1/user1.csr
+i| generating csr for subject: /C=gb/ST=someprov/L=somecity/O=someorg/OU=someou/CN=user1.test.local
+i| generating crt @ ca/user1/user1.crt
 Certificate request self-signature ok
-i| generating pem @ ca/leon/leon.pem
+subject=C=gb, ST=someprov, L=somecity, O=someorg, OU=someou, CN=user1.test.local
+i| generating pem @ ca/user1/user1.pem
+i| generating pkcs#12 @ ca/user1/user1.p12. get ready to enter a password to protect it
+Enter Export Password:
+Verifying - Enter Export Password:
 i| done
 ```
-

@@ -77,7 +77,7 @@ function add_client() {
 		-out $client_key_path 2048
 
 	existing_subject=$(openssl x509 \
-		-in $ca_x509_cert_path -noout -subject | \
+		-in $ca_x509_cert_path -noout -subject -nameopt RFC2253 | \
 		sed \
 			-e 's/^subject=//' \
 			-e 's/^[ \t]*//' \
